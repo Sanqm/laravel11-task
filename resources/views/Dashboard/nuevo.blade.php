@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class=" text-3xl text-purple-800">Bienvenido al gestor de tareas</h1>
-                    @livewire('task-component')
+                    @livewire('task-component') <!--donde counter-componenet es el nombre de la blade-->
                 </div>
             </div>
         </div>

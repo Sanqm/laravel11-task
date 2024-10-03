@@ -8,15 +8,16 @@ use App\Models\User;
 
 class TaskComponent extends Component
 {
-
     public $tasks = [];
     public $title;
     public $description;
     public $modal = false; // permite abrir el modal que vamos a crear con la tarea 
     public $users = [];
-    public $var = "cagarro como un carro";
+   
+
     public function mount() {
         $this->users = User::where('id', '!=', auth()->user()->id)->get();
+        $this->tasks = $this->getTask();
     }
 
     public function getTask(){
@@ -45,7 +46,7 @@ class TaskComponent extends Component
         $newTask = new Task();
         $newTask->title = $this->title;
         $newTask->description = $this->description;
-        $newTask->user_id = $this->auth()->user()->id;
+        $newTask->user_id =auth()->user()->id;
         $newTask->save();
         $this->clearFields();
         $this->modal= false;

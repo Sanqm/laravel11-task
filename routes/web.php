@@ -11,20 +11,21 @@ use Illuminate\Console\View\Components\Task;
 Route::redirect('/', 'dashboard'); // con esto conseguimos que nuestra 
 // app entre firectamente en el login. 
 
-// Route::view('dashboard', 'dashboard')
-//     ->middleware(['auth', 'verified'])
-//     ->name('dashboard');
+Route::view('dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('dashboard profile', [TaskComponent::class, 'render' ])
-->middleware(['auth', 'verified'])
- ->name('dasboard livewire');
+//Route::get('dashboard-livewire', TaskComponent::class)
+Route::view('dashboard-livewire', 'Dashboard.nuevo') //donde el primero será el nombre de la ruta y donde Dashboard.nuevo es la blaade que creamos 
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard livewire');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

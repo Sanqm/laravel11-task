@@ -1,5 +1,5 @@
 <!-- ====== Table Section Start -->
-<section class="bg-white " wire:poll="renderAllTasks">
+<section class="bg-white " >
     <div class="container" >
 
        <div class="flex flex-wrap -mx-4">
@@ -71,11 +71,6 @@
                       </tr>
                    </thead>
                    <tbody>
-                    @php
-                    echo $var;
-                    die;    
-                    @endphp
-                    
                     @foreach ($tasks as $task)
                         <tr>
                         <td
@@ -176,7 +171,7 @@
 
                 <div class="flex flex-row">
                     <button class="p-3 bg-black rounded-full text-white w-full font-semibold"
-                    wire:click="createorUpdateTask"
+                    wire:click="createTask"
                    >{{ isset($miTarea->id) ? 'Actualizar' : 'Crear' }} tarea</button>
 
                     </button>
