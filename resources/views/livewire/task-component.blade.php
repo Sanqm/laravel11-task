@@ -6,14 +6,19 @@
     </x-slot>
 
     <div class="py-12">
-       
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-2xl text-purple-600 mb-4">Bienvenido al Gestor de Tareas</h1>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-4 my-3"
+                    wire:click="openCreateModal">
+                    
+                        Nuevo
+                    </button>
                     <div class="relative overflow-x-auto">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 w-2/12">
                                         Titulo
@@ -47,11 +52,47 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        
+                        <!------------------Ventana Modal--------------------------->
+                        <!-- component -->
+                     
+                        <div
+                        class="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 py-10">
+                        <div class="max-h-full w-full max-w-xl overflow-y-auto sm:rounded-2xl bg-white">
+                            <div class="w-full">
+                                <div class="m-8 my-20 max-w-[400px] mx-auto">
+                                    <div class="mb-8">
+                                        <h1 class="mb-4 text-3xl font-extrabold">Crear nueva Tarea</h1>
+                                       <!--Aquí insertamos el formulario--->
+                                       <form>
+                                        <div class="mb-4">
+                                            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Título</label>
+                                            <input autofocus wire:model="title" type="text" id="title" name="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escribe aquí el título de la tarea">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Descripción</label>
+                                            <input wire:model="description" type="text" id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escribe aquí la descripción de la tarea">
+                
+                                        </div>
+                                    </form>
+                                    </div>
+                                    <div class="space-y-4 flex flex-row">
+                                        <button
+                                            class="p-3 bg-black rounded-full text-white w-full font-semibold">
+                                        Crear Tarea</button>
+                                        <button class="p-3 bg-white border rounded-full w-full font-semibold">Cancelar
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     
+                        
+                        <!--fin del modal -->
                     </div>
                 </div>
             </div>
-            
-
         </div>
     </div>
 </x-app-layout>
