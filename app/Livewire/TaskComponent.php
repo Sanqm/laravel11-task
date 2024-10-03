@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Task;
 use Livewire\Component;
 use App\Models\User;
+
 class TaskComponent extends Component
 {
 
@@ -13,7 +14,7 @@ class TaskComponent extends Component
     public $description;
     public $modal = false; // permite abrir el modal que vamos a crear con la tarea 
     public $users = [];
-
+    public $var = "cagarro como un carro";
     public function mount() {
         $this->users = User::where('id', '!=', auth()->user()->id)->get();
     }
@@ -24,8 +25,9 @@ class TaskComponent extends Component
 
     public function render()
     {
-        return view('livewire.task-component', compact('modal'));
-       
+      
+        return view('livewire.task-component');
+        
     }
 
     private function clearFields(){

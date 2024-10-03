@@ -19,9 +19,9 @@ Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('dashboard profile', TaskComponent::class)
+Route::get('dashboard profile', [TaskComponent::class, 'render' ])
 ->middleware(['auth', 'verified'])
- ->name('dashboard livewire');
+ ->name('dasboard livewire');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
