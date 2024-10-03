@@ -5,6 +5,7 @@ use App\Http\Controllers\TaskController;
 use Illuminate\Database\Query\IndexHint;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\TaskComponent;
+use Illuminate\Console\View\Components\Task;
 
 //Route::view('/', 'welcome');
 Route::redirect('/', 'dashboard'); // con esto conseguimos que nuestra 
@@ -20,7 +21,7 @@ Route::get('dashboard', [DashboardController::class, 'index'])
 
 Route::get('dashboard profile', TaskComponent::class)
 ->middleware(['auth', 'verified'])
-    ->name('dashboard livewire');
+ ->name('dashboard livewire');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
