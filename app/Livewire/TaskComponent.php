@@ -64,20 +64,20 @@ class TaskComponent extends Component
             $task = Task::find($this->miTarea->id);
             $task->update([
                 'title' => $this->title,
-                'description' => $this->description,
+                'description' => $this->description
             ]);
         }else{
             $task = Task::create([
                 'title' => $this->title,
                 'description' => $this->description,
-                'user_id' => auth()->user()->id,
+                'user_id' => auth()->user()->id
             ]);
         }
 
 
     $this->clearFields();
     $this->modal = false;
-    $this->tasks = $this->getTasks()->sortByDesc('id');
+    $this->tasks = $this->getTask()->sortByDesc('id');
     }
 
     public function updateTask(Task $task)
