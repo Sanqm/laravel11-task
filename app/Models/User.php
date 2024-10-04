@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,4 +55,20 @@ class User extends Authenticatable
         return $this->hasMany(Task::class, 'user_id', 'id' );
         
     }
+
+   /**
+    * The roles thashareTaskong to the Usey
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
+   public function sharedTasks(): BelongsToMany
+   {
+       return $this->belongsToMany(Task::class, 'task_user')->withPivot('permision');
+       // la instrucción anterior busca en la tabla Task que es donde se encontraran todas las tareas, a continuación 
+       //debemos hacer referencia a la tabla pivote que en este caso es task_user y a continuacion podemos indicar de esa 
+       // table pivote que campo de la misma que queremos traernos.
+   }
+
+
+    
 }

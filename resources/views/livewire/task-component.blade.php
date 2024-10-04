@@ -1,11 +1,11 @@
 <!-- ====== Table Section Start -->
-<section class="bg-white " >
+<section class="bg-white" wire:poll="renderAllTasks" > <!--aquí utilizaremos livewire para que actualice las tareas en tiempo real  -->
     <div class="container" >
 
        <div class="flex flex-wrap -mx-4">
           <div class="w-full px-4">
              <div class="max-w-full overflow-x-auto">
-                <button class="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-purple-700 my-6"
+                <button class="bg-purple-800 text-white px-4 py-2 rounded-md hover:bg-blue-700 my-6"
                     wire:click="openCreateModal">
                     Nuevo
                 </button>
@@ -15,6 +15,7 @@
                 </button>
                 <button class="bg-yellow-800 text-white px-4 py-2 rounded-md hover:bg-yellow-700 my-6"
                     wire:click="recoverAllTasks" wire:confirm="Estas seguro que quieres recuperar todas las tareas?">
+                    <!-- wire:confirm permite a livewire crear ventanas de confirmación -->
                     Recuperar todas las tareas
                 </button>
                 <table class="table-auto w-full">
@@ -113,23 +114,27 @@
                             >
                             @if ((isset($task->pivot) ))
                                     <button wire:click="taskUnshared({{ $task }})" wire:confirm="Estas seguro que quieres realizar la accion?" class="bg-blue-800 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-                                        DES
+                                        Dcompartir
                                     </button>
 
                             @endif
                             @if( (isset($task->pivot) && $task->pivot->permission == 'edit') ||(auth()->user()->id == $task->user_id))
                                 <div class="flex flex-row justify-between">
-                                    <button wire:click="openCreateModal({{ $task }})" class="bg-yellow-800 text-white px-4 py-2 rounded-md hover:bg-yellow-700">
+                                    <!-- Esto es igual a lo que haciamos con rafa en el admin lte
+                                    dependiendo de los permisos se muestran o no los botones -->
+                                    <button wire:click="openCreateModal({{ $task }})" class="bg-green-800 text-white px-4 py-2 rounded-md hover:bg-yellow-700">
                                         Editar
                                     </button>
 
-                                    <button wire:click="openShareModal({{ $task }})" class="bg-purple-800 text-white px-2 py-2 rounded-md hover:bg-purple-700">
+                                    <button wire:click="openShareModal({{ $task }})" class="bg-blue-800 text-white px-2 py-2 rounded-md hover:bg-purple-700">
                                         Compartir
-                                    </button>
+                                    </button>    
+                                   
+                                    
                                     <button wire:click="deleteTask({{ $task }})" wire:confirm="Are you sure you want to delete this task?"  class="bg-red-800 text-white px-4 py-2 rounded-md hover:bg-red-700">
                                         Borrar
                                     </button>
-
+                                    
                                 </div>
 
                             @endif
@@ -147,7 +152,6 @@
     </div>
     <!-- Main modal -->
     @if ($modal)
-
         <div class="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 py-10">
             <div class="max-h-full w-full max-w-xl overflow-y-auto sm:rounded-2xl bg-white">
             <div class="w-full">
@@ -181,8 +185,58 @@
             </div>
             </div>
         </div>
+    @endif 
 
-    @endif
+
+    <!--Modal para la compartición-->
   
+    @if ($modalShare)
+    <div class="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-black bg-opacity-50 py-10">
+        <div class="max-h-full w-full max-w-xl overflow-y-auto sm:rounded-2xl bg-white">
+        <div class="w-full">
+            <div class="m-8 my-20 max-w-[400px] mx-auto">
+            <div class="mb-8">
+                <h1 class="mb-4 text-3xl font-extrabold">Compartir Tarea</h1>
+
+                <form>
+                    <div class="mb-4">
+                        <label for="title" class="block mb-2 text-sm font-medium text-gray-900 ">Usuario</label>
+                        <select wire:model="user_id"  id="title" name="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escribe aquí el título de la tarea">
+                            <option value="">Selecione un Usuario</option>
+                            @foreach ($users as $user)
+                                <option value={{$user->id}}>{{$user->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 ">Permisos</label>
+                        <select wire:model="permiso"  id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escribe aquí la descripción de la tarea">
+                            <option value="">Selecione permiso</option>
+                            <option value="view">Ver</option>
+                            <option value="edit">Editar</option>
+                        </select>
+                        </select>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="flex flex-row">
+                <button class="p-3 bg-black rounded-full text-white w-full font-semibold"
+                wire:click="shareTask" wire:loadin.attr='disabled'
+               >{{ isset($miTarea->id) ? 'Compartir' : 'Cancelar' }} tarea</button>
+
+                </button>
+                <button class="p-3 bg-white border rounded-full w-full font-semibold" wire:click.prevent="closeShareModal">Cancelar</button>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+@endif
+
+
+
+
  </section>
  <!-- ====== Table Section End -->
