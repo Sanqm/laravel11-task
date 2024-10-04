@@ -171,7 +171,7 @@
 
                 <div class="flex flex-row">
                     <button class="p-3 bg-black rounded-full text-white w-full font-semibold"
-                    wire:click="createTask"
+                    wire:click="createOrUpdateTask"
                    >{{ isset($miTarea->id) ? 'Actualizar' : 'Crear' }} tarea</button>
 
                     </button>
