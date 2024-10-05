@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Esto es una Shared Task </h1>
-    {{$user}}
-
+    {{$user->name}}
+    
 </body>
 </html>
